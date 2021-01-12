@@ -55,6 +55,6 @@ class Furniture():
 
 
 if __name__ == '__main__':
-    f1 = Furniture("Pattio","Chair","Beach Pattio", "Deodar", "Baige", "Large", "None")
-    f1.Details()
+    f1 = Furniture("Pattio","Chair","Beach Pattio", "Deodar", "Baige", "Large")
+    print(f1.Details())
 

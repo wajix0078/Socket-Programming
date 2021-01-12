@@ -16,7 +16,7 @@ class User():
         with open("UserData.txt", "a") as f:
             for i, a in dict.items():
                 print(i)
-                if i == "Size":
+                if i == "Address":
                     f.write(str(a) + "\n")
                 else:
                     f.write(str(a) + ",")
@@ -25,32 +25,32 @@ class User():
     def Details(self):
         return ("here are your details",self.data_dict())
 
-    def view_furniture(self):
-        with open("myfile.txt", "r") as f:
+    def view_users(self):
+        with open("UserData.txt", "r") as f:
             all_file = f.readlines()
             f.close()
-
         return all_file
 
-    def search_furniture(self,id):
-        flag = True
-        with open("myfile.txt", "r") as f:
+    def search_user(self,id):
+        with open("UserData.txt", "r") as f:
             lines = f.read().splitlines()
-            last_line= lines[-1]
-            iter = len(lines)-1
-            while flag == True:
-                curr_list = lines[iter]
-                # print(curr_list)
-                iter = iter - 1
+            last_line = lines[-1]
+            print(last_line)
+            iter = len(lines) - 1
+            while True:
+                index = 0
+                curr_list = lines[index]
+                print(iter)
+                index = index + 1
+
                 if id in curr_list:
-                    print("if")
                     return curr_list
                     break
-                elif curr_list == last_line:
-                    print("elif")
+                elif iter == index:
                     return "No match found"
 
-if __name__ == "main":
+if __name__ == '__main__':
     print("Helllo World")
     user1 = User("Noma","this")
-    print(user1.data_dict)
+    # user1.file_handling(user1.data_dict())
+    print(user1.search_user("Dbz7ptwpqF"))

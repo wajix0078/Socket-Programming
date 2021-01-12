@@ -48,25 +48,26 @@ def Server_Connect(message):
 
     client_socket.close()
 
+if __init__  == "__main__":
 
-client_socket = socket.socket()  # Create a socket object
-host = socket.gethostname()  # Get local machine name
-port = 12345  # Reserve a port for your service.
-client_socket.connect((host, port))
-# print(s.recv(1024).decode('utf-8'))
-# arr = input("What")  #client_preference()
-# data = json.dumps({'Greet':"Hi there",'Data':arr})
-# s.send(data.encode())
-print(client_socket.recv(1024).decode())
-message = input(" -> ")
-while True:
-    if message.strip() in ["1", "2", "3", "4", "exit"]:
-        try:
-            Server_Connect(message.strip())
-        except ConnectionAbortedError:
-            "Host Machine(Server) Exited"
+    client_socket = socket.socket()  # Create a socket object
+    host = socket.gethostname()  # Get local machine name
+    port = 12345  # Reserve a port for your service.
+    client_socket.connect((host, port))
+    # print(s.recv(1024).decode('utf-8'))
+    # arr = input("What")  #client_preference()
+    # data = json.dumps({'Greet':"Hi there",'Data':arr})
+    # s.send(data.encode())
+    print(client_socket.recv(1024).decode())
+    message = input(" -> ")
+    while True:
+        if message.strip() in ["1", "2", "3", "4", "exit"]:
+            try:
+                Server_Connect(message.strip())
+            except ConnectionAbortedError:
+                "Host Machine(Server) Exited"
 
-        break
-    else:
-        print("Try Avaliable Options")
-        continue
+            break
+        else:
+            print("Try Avaliable Options")
+            pass
