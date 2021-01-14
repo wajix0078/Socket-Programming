@@ -1,51 +1,83 @@
-# 
-# # arr = ['a','b','c']
-# #
-# # for  i,a in enumerate(arr):
-# #     print(i,a)
-# 
-# 
-# arr_new  = {"this":1,"that":1}
-# 
-# # print(len(arr_new))
-# # for key,value in arr_new.items():
-# #     print(key," ",value)
-# #     for i, a in enumerate(items):
-# 
-# from furniture import  Furniture
-# f1 = Furniture("sdasd","dasdas","dasdsda","dasdsad","dasdas","dasdada")
-# # # f1.Details()
-# # # print(f1.data_dict())
-# # # f1.file_handling(f1.data_dict())
-# print(f1.search_furniture("5zXoWt8Vx"))
-# # 
-# print(f1.view_furniture())
-
-# a = input("dasdsad")
-# print(a=="")
-# a = 0
-# while True:
-#     a = a+1
-#     print(a)
-#     if a in [4,2,3]:
-#      break
-# with open("myfile.txt", "r") as f:
-#     lines = f.read().splitlines()
-#     last_line = lines[-1]
-#     print(last_line)
-#
-#     curr_list = lines[len(lines)-1]
-#     if last_line == curr_list :
-#         print("This",curr_list)
-from user import User
-
-user1 = User("Noma","abc@gmail.com","0900078601")
-print(user1.data_dict())
-user1.file_handling(user1.data_dict())
-user1.Details()
+import socket  # Import socket module
+import json
 
 
+def add_fruniture():
+    name = input("Furniture Name:")
+    type = input("Furniture Type:")
+    category = input("Furniture Category:")
+    wood_type = input("Furniture Wood type:")
+    color = input("Furniture color:")
+    size = input("Furniture size:")
+
+    return {
+        "Add": {"Name": name, "Type": type, "Category": category, "WoodType": wood_type, "Color": color, "Size": size}}
+
+def add_user():
+    name = input("User Name:")
+    cell_number = input("Cell Number Type:")
+    email = input("User Email:")
+    type = input("User Type:")
+    address = input("User Address:")
+
+    return {
+        "Add": {"Name": name, "Cell Number": cell_number, "Email": email, "Type": type, "Address": address}}
 
 
+def Server_Connect(message,Objtype=None):
+    while message.lower().strip() != 'exit' or message.strip() != '4':
+
+        client_socket.send(message.encode())  # send message
+        data = client_socket.recv(1024).decode()  # receive response
+        print('Received from server: ' + data)  # show in terminal
+        # if message.strip() == "":
+        #     print("Wrong input")
+        #     print("------------")
+
+        if message.strip() == "3":
+            data = input("->")
+            client_socket.send(data.encode())
+            print("Search Results: Here are the Details\n", json.loads(client_socket.recv(1024)))
+
+        if message.strip().lower() == "exit" or message.strip().lower() == "4" :
+
+            client_socket.close()
+            break
+
+        if message.strip() == "1":
+            add_json = json.dumps(add_fruniture())
+            client_socket.send(add_json.encode())
+            # print(add_json)
+            print("Data Saved:", json.loads(client_socket.recv(1024)))
+
+        # else:
+        #     message = input("Press Enter to see the Menu\n")
+        #     continue
+
+        message = input("-------------->Press Enter to see the Menu<--------------------")
+
+    client_socket.close()
 
 
+client_socket = socket.socket()  # Create a socket object
+host = socket.gethostname()  # Get local machine name
+port = 12345  # Reserve a port for your service.
+client_socket.connect((host, port))
+# print(s.recv(1024).decode('utf-8'))
+# arr = input("What")  #client_preference()
+# data = json.dumps({'Greet':"Hi there",'Data':arr})
+# s.send(data.encode())
+print(client_socket.recv(1024).decode())
+recieved = client_socket.recv(1024).decode()
+recieved = recieved.split(" ")
+message = input(" -> ")
+while True:
+    if message.strip() in ["1", "2", "3", "4", "exit"]:
+        try:
+            Server_Connect(message.strip())
+        except ConnectionAbortedError:
+            "Host Machine(Server) Exited"
+        break
+    else:
+        print("Try Avaliable Options")
+        pass

@@ -1,35 +1,19 @@
 import json
-from furniture import Furniture
-from ServerClass import ServerClass
-from user import User
-from UserMenu import user_menu
-from MainMenu import main_menu
 
-
-# def create_conn():
-#
-#     s = socket.socket()  # Create a socket object
-#     host = socket.gethostname()  # Get local machine name
-#     port = 12345  # Reserve a port for your service.
-#     s.bind((host, port))  # Bind to the port
-#     s.listen(5)  # Now wait for client connection.
-#     conn, address = s.accept()  # accept new connection
-#     print("Connection from: " + str(address))
 
 def furniture_menu(conn,address):
-
+    from MainMenu import main_menu
     furniture_menu = ''' Furniture Managment System
                1. Add Furniture 
                2. View Furniture
                3. Search Furiture
                4. Back to Main Menu 
                '''
-    # which_menu = "furniture"
+
     while True:
         # receive data stream. it won't accept data packet greater than 1024 bytes
         try:
             conn.send(bytes(furniture_menu, 'utf-8'))
-            # conn.send(bytes(which_menu, 'utf-8'))
             data = conn.recv(1024).decode()
 
             if data.lower().strip() == "1":
@@ -63,10 +47,9 @@ def furniture_menu(conn,address):
                 conn.send(data.encode())
 
 
-            elif data.lower().strip() == "exit" or data.lower().strip() == "4":
-                # if data is not received break
-                main_menu(conn=conn, address=address)
-                break
+            # elif data.lower().strip() == "exit" or data.lower().strip() == "4":
+            #     main_menu(conn=conn, address=address)
+            #     break
 
             elif data.lower().strip() == "":
                 print("data recieved")
@@ -79,14 +62,3 @@ def furniture_menu(conn,address):
 
 
     conn.close()
-
-
-if __name__ == '__main__':
-    server = ServerClass()
-    conn = server.conn
-    address = server.address
-    print(address)
-    print("Conn", conn)
-    main_menu(conn, address)
-    # furniture_menu(conn=conn, address=address)
-    # user_menu(conn=conn, address=address)
