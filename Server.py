@@ -84,9 +84,9 @@ def furniture_menu():
             break
 
 
-conn.close()
+    conn.close()
 
 
-if init == '__main__':
+if __name__ == '__main__':
     create_conn()
     furniture_menu()

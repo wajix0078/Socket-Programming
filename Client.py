@@ -24,6 +24,11 @@ def Server_Connect(message):
         #     print("Wrong input")
         #     print("------------")
 
+        if message.strip() == "2":
+            data = input("->")
+            client_socket.send(data.encode())
+            print("Search Results: Here are the Details\n", json.loads(client_socket.recv(1024)))
+
         if message.strip() == "3":
             data = input("->")
             client_socket.send(data.encode())
@@ -48,7 +53,7 @@ def Server_Connect(message):
 
     client_socket.close()
 
-if __init__  == "__main__":
+if __name__  == "__main__":
 
     client_socket = socket.socket()  # Create a socket object
     host = socket.gethostname()  # Get local machine name
